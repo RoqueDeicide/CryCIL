@@ -11,13 +11,13 @@ struct MonoConstructor : public IMonoConstructor
 		: IMonoConstructor(method, klass)
 	{}
 
-	virtual mono::object Create(mono::exception *ex = nullptr) const override;
-	virtual mono::object Create(IMonoArray<> &args, mono::exception *ex = nullptr) const override;
-	virtual mono::object Create(void **args, mono::exception *ex = nullptr) const override;
+	mono::object Create(mono::exception *ex = nullptr) const override;
+	mono::object Create(IMonoArray<> &args, mono::exception *ex = nullptr) const override;
+	mono::object Create(void **args, mono::exception *ex = nullptr) const override;
 
-	virtual void Initialize(void *obj, mono::exception *ex = nullptr) const override;
-	virtual void Initialize(void *obj, IMonoArray<> &args, mono::exception *ex = nullptr) const override;
-	virtual void Initialize(void *obj, void **args, mono::exception *ex = nullptr) const override;
+	void Initialize(void *obj, mono::exception *ex = nullptr) const override;
+	void Initialize(void *obj, IMonoArray<> &args, mono::exception *ex = nullptr) const override;
+	void Initialize(void *obj, void **args, mono::exception *ex = nullptr) const override;
 };
 
 #pragma warning(pop)

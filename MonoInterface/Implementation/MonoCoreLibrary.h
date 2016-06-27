@@ -6,7 +6,10 @@ struct MonoCoreLibrary : public IMonoCoreLibrary
 {
 private:
 	MonoAssembly *assembly;
-	MonoImage *image;
+	MonoImage    *image;
+
+	char *fileData;		//!< Pointer to the data this assembly was loaded from.
+	void *debugData;	//!< Pointer to the data debug information was loaded from.
 
 	Text name;
 	Text fullName;
@@ -34,39 +37,45 @@ private:
 	IMonoClass *objClass;
 	IMonoClass *valueType;
 	IMonoClass *_thread;
+
 public:
 	MonoCoreLibrary();
 	~MonoCoreLibrary();
 
-	virtual IMonoClass *GetBoolean() const override;
-	virtual IMonoClass *GetIntPtr() const override;
-	virtual IMonoClass *GetUIntPtr() const override;
-	virtual IMonoClass *GetChar() const override;
-	virtual IMonoClass *GetSbyte() const override;
-	virtual IMonoClass *GetByte() const override;
-	virtual IMonoClass *GetInt16() const override;
-	virtual IMonoClass *GetUInt16() const override;
-	virtual IMonoClass *GetInt32() const override;
-	virtual IMonoClass *GetUInt32() const override;
-	virtual IMonoClass *GetInt64() const override;
-	virtual IMonoClass *GetUInt64() const override;
-	virtual IMonoClass *GetSingle() const override;
-	virtual IMonoClass *GetDouble() const override;
-	virtual IMonoClass *GetString() const override;
-	virtual IMonoClass *GetArray() const override;
-	virtual IMonoClass *GetType() const override;
-	virtual IMonoClass *GetEnum() const override;
-	virtual IMonoClass *GetException() const override;
-	virtual IMonoClass *GetObjectClass() const override;
-	virtual IMonoClass *GetValueType() const override;
-	virtual IMonoClass *GetThread() const override;
+	IMonoClass *GetBoolean() const override;
+	IMonoClass *GetIntPtr() const override;
+	IMonoClass *GetUIntPtr() const override;
+	IMonoClass *GetChar() const override;
+	IMonoClass *GetSbyte() const override;
+	IMonoClass *GetByte() const override;
+	IMonoClass *GetInt16() const override;
+	IMonoClass *GetUInt16() const override;
+	IMonoClass *GetInt32() const override;
+	IMonoClass *GetUInt32() const override;
+	IMonoClass *GetInt64() const override;
+	IMonoClass *GetUInt64() const override;
+	IMonoClass *GetSingle() const override;
+	IMonoClass *GetDouble() const override;
+	IMonoClass *GetString() const override;
+	IMonoClass *GetArray() const override;
+	IMonoClass *GetType() const override;
+	IMonoClass *GetEnum() const override;
+	IMonoClass *GetException() const override;
+	IMonoClass *GetObjectClass() const override;
+	IMonoClass *GetValueType() const override;
+	IMonoClass *GetThread() const override;
 
-	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) const override;
+	IMonoClass *GetClass(const char *nameSpace, const char *className) const override;
+	void AssignData(char *data) override;
+	void AssignDebugData(void *data) override;
+	void TransferData(IMonoAssembly *other) override;
 
-	virtual const Text &GetName() const override;
-	virtual const Text &GetFullName() const override;
-	virtual const Text &GetFileName() const override;
+	const Text &GetName() const override;
+	const Text &GetFullName() const override;
+	const Text &GetFileName() const override;
+	void        SetFileName(const char *) override;
 
-	virtual mono::assembly GetReflectionObject() const override;
-	virtual void *GetWrappedPointer() const override;
+	mono::assembly GetReflectionObject() const override;
+	void          *GetWrappedPointer() const override;
+
 };

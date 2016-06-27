@@ -4,53 +4,20 @@
 #include "AssemblyUtilities.h"
 
 MonoAssemblyWrapper::MonoAssemblyWrapper(MonoAssembly *assembly)
+	: fileName()
+	, fileData(nullptr)
+	, debugData(nullptr)
 {
 	if (!assembly)
 	{
-		this->assembly = nullptr;
-		this->image = nullptr;
-		this->shortName = nullptr;
-		this->fullName = nullptr;
-		this->fileName = nullptr;
+		this->assembly  = nullptr;
+		this->image     = nullptr;
 	}
+
 	this->assembly = assembly;
-	this->image = mono_assembly_get_image(assembly);
+	this->image    = mono_assembly_get_image(assembly);
 
-	auto names = GetAssemblyNames(this->image);
-
-	this->fullName = names.Value1;
-	this->shortName = names.Value2;
-
-	this->fileName = "Unknown file name.";
-}
-//! Attempts to load assembly located in the file.
-//!
-//! @param assemblyFile Path to the assembly file to try loading.
-//! @param failed       Indicates whether this constructor was successful.
-MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
-{
-	MonoImageOpenStatus status;
-	this->assembly = mono_assembly_open(assemblyFile, &status);
-	failed = status != MONO_IMAGE_OK;
-
-	if (status == MONO_IMAGE_OK)
-	{
-		this->image = mono_assembly_get_image(assembly);
-		
-		auto names = GetAssemblyNames(this->image);
-
-		this->fullName = names.Value1;
-		this->shortName = names.Value2;
-
-		this->fileName = assemblyFile;
-	}
-	else
-	{
-		this->image = nullptr;
-		this->shortName = nullptr;
-		this->fullName = nullptr;
-		this->fileName = nullptr;
-	}
+	GetAssemblyNames(assembly, this->fullName, this->shortName);
 }
 
 IMonoClass *MonoAssemblyWrapper::GetClass(const char *nameSpace, const char *className) const
@@ -58,6 +25,35 @@ IMonoClass *MonoAssemblyWrapper::GetClass(const char *nameSpace, const char *cla
 	MonoClass *klass = mono_class_from_name(this->image, nameSpace, className);
 
 	return MonoClassCache::Wrap(klass);
+}
+
+void MonoAssemblyWrapper::AssignData(char *data)
+{
+	if (this->fileData || !data)
+	{
+		return;
+	}
+
+	this->fileData = data;
+}
+
+void MonoAssemblyWrapper::AssignDebugData(void *data)
+{
+	if (this->debugData || !data)
+	{
+		return;
+	}
+
+	this->debugData = data;
+}
+
+void MonoAssemblyWrapper::TransferData(IMonoAssembly *other)
+{
+	other->AssignData(this->fileData);
+	other->AssignDebugData(this->debugData);
+
+	this->fileData = nullptr;
+	this->debugData = nullptr;
 }
 
 const Text &MonoAssemblyWrapper::GetName() const
@@ -74,6 +70,17 @@ const Text &MonoAssemblyWrapper::GetFileName() const
 {
 	return this->fileName;
 }
+
+void MonoAssemblyWrapper::SetFileName(const char *fileName)
+{
+	if (!this->fileName.Empty || !fileName)
+	{
+		return;
+	}
+
+	this->fileName = fileName;
+}
+
 
 //! Returns a pointer to the MonoAssembly for Mono API calls.
 void *MonoAssemblyWrapper::GetWrappedPointer() const

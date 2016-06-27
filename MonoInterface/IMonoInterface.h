@@ -28,6 +28,21 @@
 #endif
 
 #define MONO_INTERFACE_INIT "InitializeCryCilSubsystem"
+
+struct MonoLog
+{
+	enum Level
+	{
+		Null = 0,
+		Error,
+		Critical,
+		Warning,
+		Message,
+		Info,
+		Debug
+	};
+};
+
 //! Base class for MonoRunTime. Provides access to Mono interface.
 struct IMonoInterface
 {
@@ -56,7 +71,9 @@ public:
 		, gc(nullptr)
 		, framework(nullptr)
 		, objs(nullptr)
-		, funcs(nullptr) {}
+		, funcs(nullptr)
+	{
+	}
 
 	virtual ~IMonoInterface()
 	{
@@ -108,6 +125,12 @@ public:
 	__declspec(property(get = GetObjects)) IMonoObjects *Objects;
 	//! Gets the interface that provides access to Mono functions API.
 	__declspec(property(get = GetFunctions)) IMonoFunctions *Functions;
+	//! Gets the path to the executable file.
+	__declspec(property(get = GetBasePath)) const Text &ExePath;
+	//! Gets the path to the project directory that was specified with command line argument.
+	__declspec(property(get = GetProjectPath)) const Text &ProjectPath;
+	//! Sets the type of log message to treat Mono log messages as.
+	__declspec(property(put = SetMonoLogLevel)) MonoLog::Level MonoLogLevel;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	IMonoAssemblies *GetAssemblies() const
@@ -146,6 +169,9 @@ public:
 	{
 		return this->funcs;
 	}
+	VIRTUAL_API virtual const Text &GetBasePath() = 0;
+	VIRTUAL_API virtual const Text &GetProjectPath() = 0;
+	VIRTUAL_API virtual void SetMonoLogLevel(MonoLog::Level logLevel) = 0;
 };
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);

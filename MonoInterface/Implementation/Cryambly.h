@@ -6,7 +6,10 @@ struct CryamblyWrapper : public ICryambly
 {
 private:
 	MonoAssembly *assembly;
-	MonoImage *image;
+	MonoImage    *image;
+
+	char *fileData;		//!< Pointer to the data this assembly was loaded from.
+	void *debugData;	//!< Pointer to the data debug information was loaded from.
 
 	Text name;
 	Text fullName;
@@ -28,32 +31,36 @@ private:
 	IMonoClass *colorByte;
 	IMonoClass *colorSingle;
 public:
-	CryamblyWrapper(const char *fileName);
+	explicit CryamblyWrapper(const char *fileName);
 	~CryamblyWrapper();
 
-	virtual IMonoClass *GetMatrix33() const override;
-	virtual IMonoClass *GetMatrix34() const override;
-	virtual IMonoClass *GetMatrix44() const override;
-	virtual IMonoClass *GetVector2() const override;
-	virtual IMonoClass *GetVector3() const override;
-	virtual IMonoClass *GetVector4() const override;
-	virtual IMonoClass *GetAngleAxis() const override;
-	virtual IMonoClass *GetBoundingBox() const override;
-	virtual IMonoClass *GetEulerAngles() const override;
-	virtual IMonoClass *GetPlane() const override;
-	virtual IMonoClass *GetQuaternion() const override;
-	virtual IMonoClass *GetQuatvec() const override;
-	virtual IMonoClass *GetRay() const override;
-	virtual IMonoClass *GetColorByte() const override;
-	virtual IMonoClass *GetColorSingle() const override;
+	IMonoClass *GetMatrix33() const override;
+	IMonoClass *GetMatrix34() const override;
+	IMonoClass *GetMatrix44() const override;
+	IMonoClass *GetVector2() const override;
+	IMonoClass *GetVector3() const override;
+	IMonoClass *GetVector4() const override;
+	IMonoClass *GetAngleAxis() const override;
+	IMonoClass *GetBoundingBox() const override;
+	IMonoClass *GetEulerAngles() const override;
+	IMonoClass *GetPlane() const override;
+	IMonoClass *GetQuaternion() const override;
+	IMonoClass *GetQuatvec() const override;
+	IMonoClass *GetRay() const override;
+	IMonoClass *GetColorByte() const override;
+	IMonoClass *GetColorSingle() const override;
 
-	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) const override;
+	IMonoClass *GetClass(const char *nameSpace, const char *className) const override;
+	void AssignData(char *data) override;
+	void AssignDebugData(void *data) override;
+	void TransferData(IMonoAssembly *other) override;
 
-	virtual const Text &GetName() const override;
-	virtual const Text &GetFullName() const override;
-	virtual const Text &GetFileName() const override;
+	const Text &GetName() const override;
+	const Text &GetFullName() const override;
+	const Text &GetFileName() const override;
+	void        SetFileName(const char *) override;
 
-	virtual mono::assembly GetReflectionObject() const override;
-	virtual void *GetWrappedPointer() const override;
+	mono::assembly GetReflectionObject() const override;
+	void          *GetWrappedPointer() const override;
 
 };

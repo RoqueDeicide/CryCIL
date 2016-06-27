@@ -6,18 +6,19 @@
 #include "MonoStaticMethod.h"
 
 #if 0
-#define PropertyMessage CryLogAlways
+  #define PropertyMessage CryLogAlways
 #else
-#define PropertyMessage(...) void(0)
+  #define PropertyMessage(...) void(0)
 #endif
 
 struct MonoPropertyWrapper : public IMonoProperty
 {
 private:
-	MonoProperty *prop;
-	IMonoClass *klass;
+	MonoProperty        *prop;
+	IMonoClass          *klass;
 	const IMonoFunction *getter;
 	const IMonoFunction *setter;
+
 public:
 	explicit MonoPropertyWrapper(MonoProperty *prop, IMonoClass *klass = nullptr);
 	~MonoPropertyWrapper()
@@ -26,13 +27,13 @@ public:
 		if (this->setter) delete this->setter; this->setter = nullptr;
 	}
 
-	virtual const IMonoFunction *GetGetter() const override;
-	virtual const IMonoFunction *GetSetter() const override;
-	virtual void          *GetWrappedPointer() const override;
-	virtual const char    *GetName() const override;
-	virtual IMonoClass    *GetDeclaringClass() const override;
-	virtual const IMonoFunction *GetIdentifier() const override;
-	virtual int            GetParameterCount() const override;
+	const IMonoFunction *GetGetter() const override;
+	const IMonoFunction *GetSetter() const override;
+	void                *GetWrappedPointer() const override;
+	const char          *GetName() const override;
+	IMonoClass          *GetDeclaringClass() const override;
+	const IMonoFunction *GetIdentifier() const override;
+	int                  GetParameterCount() const override;
 
 private:
 	static const IMonoFunction *GetFunctionWrapper(MonoMethod *method, IMonoClass *klass);

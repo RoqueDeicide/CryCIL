@@ -10,10 +10,7 @@ MonoCoreLibrary::MonoCoreLibrary()
 	this->image = mono_get_corlib();
 	this->assembly = mono_image_get_assembly(this->image);
 
-	auto names = GetAssemblyNames(this->image);
-
-	this->name = names.Value2;
-	this->fullName = names.Value1;
+	GetAssemblyNames(this->assembly, this->fullName, this->name);
 
 	this->fileName = "";
 
@@ -40,12 +37,17 @@ MonoCoreLibrary::MonoCoreLibrary()
 	this->valueType   = MonoClassCache::Wrap(mono_class_from_name(this->image, "System", "ValueType"));
 	this->_thread     = MonoClassCache::Wrap(mono_get_thread_class());
 
-	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry.Add(this->name,
-																			 List<IMonoAssembly *>({ this }));
+	auto assemblies = static_cast<MonoAssemblies *>(MonoEnv->Assemblies);
+	IMonoAssembly *ptr;
+	assemblies->Registry.Add(this, &ptr);
+	ptr->TransferData(this);
+	delete ptr;
 }
 
 MonoCoreLibrary::~MonoCoreLibrary()
 {
+	if (this->fileData) delete[] this->fileData;
+	if (this->debugData) delete[] this->debugData;
 }
 
 IMonoClass *MonoCoreLibrary::GetBoolean() const
@@ -163,6 +165,35 @@ IMonoClass *MonoCoreLibrary::GetClass(const char *nameSpace, const char *classNa
 	return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 }
 
+void MonoCoreLibrary::AssignData(char *data)
+{
+	if (this->fileData || !data)
+	{
+		return;
+	}
+
+	this->fileData = data;
+}
+
+void MonoCoreLibrary::AssignDebugData(void *data)
+{
+	if (this->debugData || !data)
+	{
+		return;
+	}
+
+	this->debugData = data;
+}
+
+void MonoCoreLibrary::TransferData(IMonoAssembly *other)
+{
+	other->AssignData(this->fileData);
+	other->AssignDebugData(this->debugData);
+
+	this->fileData = nullptr;
+	this->debugData = nullptr;
+}
+
 const Text &MonoCoreLibrary::GetName() const
 {
 	return this->name;
@@ -176,6 +207,10 @@ const Text &MonoCoreLibrary::GetFullName() const
 const Text &MonoCoreLibrary::GetFileName() const
 {
 	return this->fileName;
+}
+
+void MonoCoreLibrary::SetFileName(const char *)
+{
 }
 
 mono::assembly MonoCoreLibrary::GetReflectionObject() const

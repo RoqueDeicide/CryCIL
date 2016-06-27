@@ -85,7 +85,7 @@ IGameRef CryCilGameShell::Init(SSystemInitParams &startupParams)
 
 	// Add your listeners here...
 
-	this->cryCilDll = InitializeCryCIL(this->framework, &listeners, true);
+	this->cryCilDll = InitializeCryCIL(this->framework, &listeners, startupParams, true);
 
 	// Initialize the game.
 	static char gameBuffer[sizeof(CryCilGame)];

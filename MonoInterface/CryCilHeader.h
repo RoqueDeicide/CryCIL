@@ -74,6 +74,7 @@ inline HMODULE InitializeCryCIL
 (
 	IGameFramework *framework,
 	List<IMonoSystemListener *> *listeners,
+	SSystemInitParams &startupParams,
 	bool earlyMonoEnvInit = true
 )
 {
@@ -82,12 +83,15 @@ inline HMODULE InitializeCryCIL
 	{
 		CryFatalError("Could not locate %s.", MONOINTERFACE_LIBRARY);
 	}
+
 	CryLogAlways("Loaded CryCIL interface library.");
+	
 	auto initFunc = reinterpret_cast<InitializeMonoInterface>(CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT));
 	if (!initFunc)
 	{
 		CryFatalError("Could not locate %s function within %s.", MONO_INTERFACE_INIT, MONOINTERFACE_LIBRARY);
 	}
+
 	CryLogAlways("Acquired a pointer to initializer function.");
 
 	List<IMonoSystemListener *> ls(1);
@@ -98,6 +102,6 @@ inline HMODULE InitializeCryCIL
 		lsPtr->Add(new EarlyInitializer());
 	}
 
-	MonoEnv = initFunc(framework, lsPtr);
+	MonoEnv = initFunc(framework, lsPtr, startupParams);
 	return monoInterfaceDll;
 }

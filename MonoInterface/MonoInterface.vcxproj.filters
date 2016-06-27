@@ -1196,6 +1196,12 @@
     <ClCompile Include="Interops\MeshObject.cpp">
       <Filter>Interops\Engine\Models</Filter>
     </ClCompile>
+    <ClCompile Include="RunTime\MonoInterface.Hooks.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\MonoInterface.Initialization.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

@@ -1,19 +1,10 @@
 #pragma once
 
 #if defined(PS3) || defined(LINUX) || defined(APPLE) || defined(ORBIS)
-#define PATH_SEPARATOR "/"
+  #define PATH_SEPARATOR "/"
 #else
-#define PATH_SEPARATOR "\\"
+  #define PATH_SEPARATOR "\\"
 #endif
-
-#define BIN32_FOLDER            "Bin32"
-#define BIN64_FOLDER            "Bin64"
-
-#ifdef WIN64
-#define BINARIES_FOLDER         BIN64_FOLDER
-#else
-#define BINARIES_FOLDER         BIN32_FOLDER
-#endif // WIN64
 
 #define MODULES_FOLDER          "Modules"
 #define CRYCIL_FOLDER           "CryCIL"
@@ -40,16 +31,49 @@ inline bool StartsWith(const char *text, const char *prefix)
 //! @param postfix postfix which presence to check at the end of the text.
 inline bool EndsWith(const char *text, const char *postfix)
 {
-	int textLength = strlen(text);
+	int textLength    = strlen(text);
 	int postfixLength = strlen(postfix);
 
 	return textLength >= postfixLength &&
-		strncmp(text + textLength - postfixLength, postfix, postfixLength) == 0;
+		   strncmp(text + textLength - postfixLength, postfix, postfixLength) == 0;
+}
+
+inline Text BuildPath(std::initializer_list<const char *> parts, bool isFileName)
+{
+	Text path;
+
+	for (auto &p : parts)
+	{
+		int offset = 0;
+		if (!path.Empty && StartsWith(p, PATH_SEPARATOR))
+		{
+			offset = 1;		// Make sure the separator character is not duplicated.
+		}
+		path.Append(p + offset);
+		if (!EndsWith(path, PATH_SEPARATOR))
+		{
+			path.Append(PATH_SEPARATOR);
+		}
+	}
+
+	if (isFileName)
+	{
+		path.Resize(path.Length - 1);
+	}
 }
 
 //! Defines functions that return paths to various folders within CryEngine installation.
 struct DirectoryStructure
 {
+private:
+	static Text monoConfigFolder;
+	static Text monoLibFolder;
+	static Text cryCilBinFolder;
+	static Text cryamblyFile;
+	static Text pdb2mdbFile;
+	static Text appDomainConfigFile;
+
+public:
 	//! Returns a path to the folder that contains Mono configuration files.
 	static const char *GetMonoConfigurationFolder();
 	//! Returns a path to the folder that contains Mono libraries.

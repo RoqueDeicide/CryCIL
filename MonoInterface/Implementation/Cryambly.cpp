@@ -6,14 +6,15 @@
 #include "MonoAssemblies.h"
 
 #if 1
-#define CryamblyMessage CryLogAlways
+  #define CryamblyMessage CryLogAlways
 #else
-#define CryamblyMessage(...) void(0)
+  #define CryamblyMessage(...) void(0)
 #endif
 
 CryamblyWrapper::CryamblyWrapper(const char *fileName)
 {
 	CryamblyMessage("Started creation of Cryambly object.");
+
 	MonoImageOpenStatus status;
 	this->assembly = mono_assembly_open(fileName, &status);
 
@@ -31,13 +32,8 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 
 	CryamblyMessage("Getting the assembly names.");
 
-	auto names = GetAssemblyNames(this->image);
+	GetAssemblyNames(this->assembly, this->fullName, this->name);
 
-	CryamblyMessage("Acquired the assembly names.");
-
-	this->name = names.Value2;
-	this->fullName = names.Value1;
-	
 	this->fileName = fileName;
 
 	CryamblyMessage("Starting caching the classes.");
@@ -61,13 +57,18 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	CryamblyMessage("Finished caching the classes.");
 
 	CryamblyMessage("Adding the Cryambly to the registry.");
-	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry.Add(this->name,
-																			 List<IMonoAssembly *>({ this }));
+	auto assemblies = static_cast<MonoAssemblies *>(MonoEnv->Assemblies);
+	IMonoAssembly *ptr;
+	assemblies->Registry.Add(this, &ptr);
+	ptr->TransferData(this);
+	delete ptr;
 	CryamblyMessage("Added the Cryambly to the registry.");
 }
 
 CryamblyWrapper::~CryamblyWrapper()
 {
+	if (this->fileData) delete[] this->fileData;
+	if (this->debugData) delete[] this->debugData;
 }
 
 
@@ -152,6 +153,35 @@ IMonoClass *CryamblyWrapper::GetClass(const char *nameSpace, const char *classNa
 	return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 }
 
+void CryamblyWrapper::AssignData(char *data)
+{
+	if (this->fileData || !data)
+	{
+		return;
+	}
+
+	this->fileData = data;
+}
+
+void CryamblyWrapper::AssignDebugData(void *data)
+{
+	if (this->debugData || !data)
+	{
+		return;
+	}
+
+	this->debugData = data;
+}
+
+void CryamblyWrapper::TransferData(IMonoAssembly *other)
+{
+	other->AssignData(this->fileData);
+	other->AssignDebugData(this->debugData);
+
+	this->fileData = nullptr;
+	this->debugData = nullptr;
+}
+
 const Text &CryamblyWrapper::GetName() const
 {
 	return this->name;
@@ -175,4 +205,8 @@ mono::assembly CryamblyWrapper::GetReflectionObject() const
 void *CryamblyWrapper::GetWrappedPointer() const
 {
 	return this->assembly;
+}
+
+void CryamblyWrapper::SetFileName(const char *)
+{
 }

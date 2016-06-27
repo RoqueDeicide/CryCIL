@@ -15,11 +15,9 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 	//! @param listeners Pointer to a list of listeners to register before initialization.
 	//!                  Can be null if there are no listeners to register. All listeners
 	//!                  must be persistent.
-	MONOINTERFACE_API IMonoInterface *InitializeCryCilSubsystem
-	(
-		IGameFramework *framework,
-		List<IMonoSystemListener *> *listeners
-	)
+	MONOINTERFACE_API IMonoInterface *InitializeCryCilSubsystem(IGameFramework *framework,
+																List<IMonoSystemListener *> *listeners,
+																SSystemInitParams &startupParams)
 	{
 		// Initializes gEnv variable, registers some objects.
 		// Fun fact: Module name is only used for Unit Tests.
@@ -27,6 +25,6 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 
 		// Use static allocation. Allows to not have to call a destructor.
 		static char buff[sizeof(MonoInterface)];
-		return new (buff)MonoInterface(framework, listeners);
+		return new (buff)MonoInterface(framework, listeners, startupParams);
 	}
 }

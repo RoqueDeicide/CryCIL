@@ -77,7 +77,7 @@ namespace CryCil.RunTime
 
 			// Load all extra modules.
 			string gameModulesPath = Path.Combine(DirectoryStructure.ContentFolder, "Modules", "CryCIL");
-			string engineModulesPath = Path.Combine(DirectoryStructure.PlatformFolder, "Modules", "CryCIL");
+			string engineModulesPath = Path.Combine(DirectoryStructure.ExecutablesFolder, "Modules", "CryCIL");
 
 			List<string> gameModules = new List<string>();
 			List<string> cryEngineModules = new List<string>();

@@ -10,99 +10,41 @@ namespace CryCil.RunTime
 	public static class DirectoryStructure
 	{
 		/// <summary>
-		/// Defines the name of the folder within CryEngine folder that contains platform-specific (x86 or
-		/// x64) assemblies.
-		/// </summary>
-		public const string PlatformFolderName =
-#if WIN32
-			"Bin32";
-#else
-			"Bin64";
-#endif
-		/// <summary>
-		/// Gets the path to the CryEngine folder.
+		/// Gets the path to the folder that contains the project.
 		/// </summary>
 		/// <remarks>
-		/// The CryEngine folder is the one that contains system.cfg that contains "sys_game_folder=" line
-		/// within.
+		/// The project is a set of code, data etc. that doesn't include the CryEngine itself, but uses the
+		/// latter to work.
 		/// </remarks>
-		public static string CryEngineFolder { get; }
+		public static string ProjectFolder { get; private set; }
 		/// <summary>
-		/// Gets path to the platform-specific (x86 or x64) folder within main installation directory.
+		/// Gets the path to the folder that contains the game-specific data.
+		/// </summary>
+		/// <remarks>This folder is located in the <see cref="ProjectFolder"/>.</remarks>
+		public static string ContentFolder { get; private set; }
+		/// <summary>
+		/// Gets the path to the folder that contains the CryEngine platform.
 		/// </summary>
 		public static string PlatformFolder { get; private set; }
 		/// <summary>
-		/// Gets the path to the directory that contains game content.
+		/// Gets the path to the folder that contains the .exe file for this game.
 		/// </summary>
-		/// <remarks>
-		/// The path to the game content in clean Eaas SDK installation is &lt;CryEngine Installation
-		/// Path&gt;\GameSDK.
-		/// </remarks>
-		public static string ContentFolder { get; private set; }
-		/// <summary>
-		/// Gets the path to the folder with referable assemblies.
-		/// </summary>
-		public static string AssembliesFolder { get; private set; }
-		static DirectoryStructure()
+		public static string ExecutablesFolder { get; private set; }
+		[RawThunk("Invoked by underlying framework to let the managed code know the paths to relevant " +
+				  "directories.")]
+		private static void InitializeFolderPaths(string exeFolder, string projectFolder, string gameFolder)
 		{
-			string contents;
-			string currentDirectory = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
-			string root = Path.GetPathRoot(currentDirectory);
-
-			// Look for system.cfg
-			while (currentDirectory != root)
+			try
 			{
-				if (currentDirectory == null)
-				{
-					break;
-				}
-				string systemFile =
-					Directory.GetFiles(currentDirectory, "system.cfg", SearchOption.TopDirectoryOnly)
-							 .FirstOrDefault();
-				if (systemFile != null)
-				{
-					// Found one, lets check it for presence of sys_game_folder
-					using (StreamReader sr = new StreamReader(systemFile))
-					{
-						contents = sr.ReadToEnd();
-					}
-					if (contents.Contains("sys_game_folder=") ||
-						contents.Contains("sys_game_folder ="))
-					{
-						CryEngineFolder = Path.GetDirectoryName(systemFile);
-						break;
-					}
-				}
-				// Move to the parent directory.
-				currentDirectory = Path.GetDirectoryName(currentDirectory);
+				ExecutablesFolder = exeFolder;
+				PlatformFolder = new DirectoryInfo(exeFolder).Parent?.Parent?.FullName ?? "";
+				ProjectFolder = projectFolder;
+				ContentFolder = gameFolder;
 			}
-			if (CryEngineFolder == null)
+			catch (Exception ex)
 			{
-				throw new Exception("Unable to locate base CryEngine folder.");
+				MonoInterface.DisplayException(ex);
 			}
-
-			PlatformFolder = Path.Combine(CryEngineFolder,
-										  PlatformFolderName);
-
-			// Get game folder from system.cfg
-			using (StreamReader sr = new StreamReader(Path.Combine(CryEngineFolder, "system.cfg")))
-			{
-				contents = sr.ReadToEnd();
-			}
-			string[] lines =
-				contents.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-			string gameFolderLine = lines.FirstOrDefault(l => l.Contains("sys_game_folder"));
-			if (gameFolderLine == null)
-			{
-				throw new Exception("Unable to find location of game folder.");
-			}
-			int gameFolderNameStart = gameFolderLine.LastIndexOf('=') + 1;
-			ContentFolder = Path.Combine(CryEngineFolder,
-										 gameFolderLine.Substring
-											 (gameFolderNameStart,
-											  gameFolderLine.Length - gameFolderNameStart));
-			// Get Mono lib folder.
-			AssembliesFolder = Path.Combine(CryEngineFolder, "Bin32", "Modules", "CryCIL", "Mono", "lib");
 		}
 	}
 }

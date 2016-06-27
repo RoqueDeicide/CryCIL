@@ -18,11 +18,11 @@ private:
 public:
 	explicit MonoEventWrapper(MonoEvent *_event, IMonoClass *klass = nullptr);
 
-	virtual const IMonoFunction *GetAdd() const override;
-	virtual const IMonoFunction *GetRemove() const override;
-	virtual const IMonoFunction *GetRaise() const override;
+	const IMonoFunction *GetAdd() const override;
+	const IMonoFunction *GetRemove() const override;
+	const IMonoFunction *GetRaise() const override;
 
-	virtual const char *GetName() const override;
-	virtual void       *GetWrappedPointer() const override;
-	virtual IMonoClass *GetDeclaringClass() const override;
+	const char *GetName() const override;
+	void       *GetWrappedPointer() const override;
+	IMonoClass *GetDeclaringClass() const override;
 };

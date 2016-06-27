@@ -9,7 +9,9 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	__declspec(property(get = GetName)) const Text &Name;
 	//! Gets the full name of the assembly.
 	__declspec(property(get = GetFullName)) const Text &FullName;
-	//! Gets the full name of the assembly.
+	//! Gets or sets the name of the file this assembly was loaded from.
+	//!
+	//! File name can only be assigned once per assembly.
 	__declspec(property(get = GetFileName)) const Text &FileName;
 
 	//! Gets the class.
@@ -17,9 +19,17 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	//! @param nameSpace Name space where the class is defined.
 	//! @param className Name of the class to get.
 	VIRTUAL_API virtual IMonoClass *GetClass(const char *nameSpace, const char *className) const = 0;
+	//! Assigns the pointer to the data this assembly was loaded from.
+	VIRTUAL_API virtual void AssignData(char *data) = 0;
+	//! Assigns the pointer to the debug data of this assembly was loaded from.
+	VIRTUAL_API virtual void AssignDebugData(void *data) = 0;
+	//! Reassigns data from this object to another.
+	VIRTUAL_API virtual void TransferData(IMonoAssembly *other) = 0;
 	VIRTUAL_API virtual const Text &GetName() const = 0;
 	VIRTUAL_API virtual const Text &GetFullName() const = 0;
 	VIRTUAL_API virtual const Text &GetFileName() const = 0;
+	//! Assigns the name of the file this assembly was loaded from, if it didn't have one before.
+	VIRTUAL_API virtual void SetFileName(const char *fileName) = 0;
 	//! Gets the reference to the instance of type System.Reflection.Assembly.
 	__declspec(property(get = GetReflectionObject)) mono::assembly ReflectionObject;
 

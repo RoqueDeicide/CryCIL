@@ -16,7 +16,7 @@ struct MonoGC : public IMonoGC
 {
 	MonoGC() {}
 	
-	virtual void Collect(int generation = -1) override
+	void Collect(int generation = -1) override
 	{
 		GcMessage("Triggering the garbage collection.");
 
@@ -25,7 +25,7 @@ struct MonoGC : public IMonoGC
 		GcMessage("Triggered the garbage collection.");
 	}
 
-	virtual unsigned int Hold(mono::object obj) override
+	unsigned int Hold(mono::object obj) override
 	{
 		if (obj)
 		{
@@ -35,7 +35,7 @@ struct MonoGC : public IMonoGC
 		return -1;
 	}
 
-	virtual unsigned int HoldWithHope(mono::object obj) override
+	unsigned int HoldWithHope(mono::object obj) override
 	{
 		if (obj)
 		{
@@ -45,7 +45,7 @@ struct MonoGC : public IMonoGC
 		return -1;
 	}
 
-	virtual unsigned int Keep(mono::object obj) override
+	unsigned int Keep(mono::object obj) override
 	{
 		if (obj)
 		{
@@ -55,7 +55,7 @@ struct MonoGC : public IMonoGC
 		return -1;
 	}
 
-	virtual unsigned int Pin(mono::object obj) override
+	unsigned int Pin(mono::object obj) override
 	{
 		if (obj)
 		{
@@ -65,17 +65,17 @@ struct MonoGC : public IMonoGC
 		return -1;
 	}
 
-	virtual int GetMaxGeneration() override
+	int GetMaxGeneration() override
 	{
 		return mono_gc_max_generation();
 	}
 
-	virtual __int64 GetHeapSize() override
+	__int64 GetHeapSize() override
 	{
 		return mono_gc_get_heap_size();
 	}
 
-	virtual void ReleaseGCHandle(unsigned int handle) override
+	void ReleaseGCHandle(unsigned int handle) override
 	{
 		if (handle == -1)
 		{
@@ -84,7 +84,7 @@ struct MonoGC : public IMonoGC
 		mono_gchandle_free(handle);
 	}
 
-	virtual mono::object GetGCHandleTarget(unsigned int handle) override
+	mono::object GetGCHandleTarget(unsigned int handle) override
 	{
 		if (handle == -1)
 		{

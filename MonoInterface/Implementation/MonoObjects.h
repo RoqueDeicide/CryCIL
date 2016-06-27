@@ -18,6 +18,7 @@ private:
 	MonoDelegates    *delegates;
 	DefaultBoxinator *boxinator;
 	MonoThreads      *threads;
+
 public:
 	MonoObjects()
 	{
@@ -38,38 +39,38 @@ public:
 		delete this->threads;
 	}
 
-	virtual void *Unbox(mono::object value) override;
+	void *Unbox(mono::object value) override;
 
-	virtual IMonoArrays       *GetArrays() override;
-	virtual IMonoTexts        *GetTexts() override;
-	virtual IMonoExceptions   *GetExceptions() override;
-	virtual IMonoDelegates    *GetDelegates() override;
-	virtual IDefaultBoxinator *GetBoxinator() override;
-	virtual IMonoThreads      *GetThreads() override;
+	IMonoArrays       *GetArrays() override;
+	IMonoTexts        *GetTexts() override;
+	IMonoExceptions   *GetExceptions() override;
+	IMonoDelegates    *GetDelegates() override;
+	IDefaultBoxinator *GetBoxinator() override;
+	IMonoThreads      *GetThreads() override;
 
-	virtual IMonoClass *GetObjectClass(mono::object obj) override;
+	IMonoClass *GetObjectClass(mono::object obj) override;
 
-	virtual int         GetArrayRank(mono::Array ar) override;
-	virtual int         GetArrayElementSize(mono::Array ar) override;
-	virtual IMonoClass *GetArrayElementClass(mono::Array ar) override;
+	int         GetArrayRank(mono::Array ar) override;
+	int         GetArrayElementSize(mono::Array ar) override;
+	IMonoClass *GetArrayElementClass(mono::Array ar) override;
 
-	virtual void ThrowException(mono::exception ex) override;
+	void ThrowException(mono::exception ex) override;
 	
-	virtual IMonoFunction *GetDelegateFunction(mono::delegat delegat) override;
-	virtual mono::object   GetDelegateTarget(mono::delegat delegat) override;
-	virtual void          *GetDelegateTrampoline(mono::delegat delegat) override;
-	virtual mono::object   InvokeDelegate(mono::delegat delegat, void **params, mono::exception *ex) override;
+	IMonoFunction *GetDelegateFunction(mono::delegat delegat) override;
+	mono::object   GetDelegateTarget(mono::delegat delegat) override;
+	void          *GetDelegateTrampoline(mono::delegat delegat) override;
+	mono::object   InvokeDelegate(mono::delegat delegat, void **params, mono::exception *ex) override;
 
 
-	virtual bool           StringEquals(mono::string str, mono::string other) override;
-	virtual mono::string   InternString(mono::string str) override;
-	virtual wchar_t       &StringAt(mono::string str, int index) override;
-	virtual int            GetStringHashCode(mono::string str) override;
-	virtual bool           IsStringInterned(mono::string str) override;
-	virtual const char    *StringToNativeUTF8(mono::string str) override;
-	virtual const wchar_t *StringToNativeUTF16(mono::string str) override;
-	virtual int            StringLength(mono::string str) override;
+	bool           StringEquals(mono::string str, mono::string other) override;
+	mono::string   InternString(mono::string str) override;
+	wchar_t       &StringAt(mono::string str, int index) override;
+	int            GetStringHashCode(mono::string str) override;
+	bool           IsStringInterned(mono::string str) override;
+	const char    *StringToNativeUTF8(mono::string str) override;
+	const wchar_t *StringToNativeUTF16(mono::string str) override;
+	int            StringLength(mono::string str) override;
 
-	virtual void ThreadDetach(mono::Thread thr) override;
-	virtual void MonitorExit(mono::object obj) override;
+	void ThreadDetach(mono::Thread thr) override;
+	void MonitorExit(mono::object obj) override;
 };
