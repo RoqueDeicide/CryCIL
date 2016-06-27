@@ -9,6 +9,7 @@ namespace CryCil.RunTime
 		private static string LookUpAssembly(string shortName)
 		{
 			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
 			// ReSharper disable LoopCanBeConvertedToQuery
 			for (int i = 0; i < assemblies.Length; i++)
 				// ReSharper restore LoopCanBeConvertedToQuery

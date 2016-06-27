@@ -6,12 +6,14 @@ namespace CryCil.Engine.Models.Characters
 {
 	internal unsafe struct ParametricSamplerInternals
 	{
+#pragma warning disable 649
 		internal void* Vtable;
 		internal byte ParametricType; //Type of Group: i.e. I2M, M2I, MOVE, Idle-Step, Idle-Rot, etc....
 		internal byte NumDimensions; //how many dimensions are used in this Parametric Group
 		internal fixed float MotionParameter [4]; //we have only 4 dimensions per blend-space
 		internal fixed byte MotionParameterID [4]; //we have only 4 dimensions per blend-space
 		internal fixed byte MotionParameterFlags [4]; //we have only 4 dimensions per blend-space
+#pragma warning restore 649
 	}
 	/// <summary>
 	/// Enumeration of flags that specifies dimensions of the parametric group in

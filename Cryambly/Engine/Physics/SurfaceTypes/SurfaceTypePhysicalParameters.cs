@@ -8,6 +8,7 @@ namespace CryCil.Engine.Physics
 	/// </summary>
 	public struct SurfaceTypePhysicalParameters
 	{
+#pragma warning disable 649
 		[UsedImplicitly] private int breakableId;
 		[UsedImplicitly] private int breakEnergy;
 		[UsedImplicitly] private float holeSize;
@@ -27,6 +28,7 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int breakability;
 		[UsedImplicitly] private int collType;
 		[UsedImplicitly] private float soundObstruction;
+#pragma warning restore 649
 		/// <summary>
 		/// Unknown.
 		/// </summary>

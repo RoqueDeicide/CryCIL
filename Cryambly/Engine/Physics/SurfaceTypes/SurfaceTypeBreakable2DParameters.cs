@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -110,5 +111,39 @@ namespace CryCil.Engine.Physics
 		/// Unknown.
 		/// </summary>
 		public float DestroyTimeoutSpread => this.destroyTimeoutSpread;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
+		/// </summary>
+		internal SurfaceTypeBreakable2DParameters(IntPtr particleEffect, float blastRadius,
+												  float blastRadiusFirst, float vertexSizeSpread,
+												  int rigidBody, float lifeTime, float cellSize,
+												  int maxPatchTriangles, float filterAngle,
+												  float shardDensity, int useEdgeAlpha, float crackDecalScale,
+												  IntPtr crackDecalMtl, float maxFracture,
+												  IntPtr fullFractureFx, IntPtr fractureFx,
+												  int noProceduralFullFracture, IntPtr brokenMtl,
+												  float destroyTimeout, float destroyTimeoutSpread)
+		{
+			this.particleEffect = particleEffect;
+			this.blastRadius = blastRadius;
+			this.blastRadiusFirst = blastRadiusFirst;
+			this.vertexSizeSpread = vertexSizeSpread;
+			this.rigidBody = rigidBody;
+			this.lifeTime = lifeTime;
+			this.cellSize = cellSize;
+			this.maxPatchTriangles = maxPatchTriangles;
+			this.filterAngle = filterAngle;
+			this.shardDensity = shardDensity;
+			this.useEdgeAlpha = useEdgeAlpha;
+			this.crackDecalScale = crackDecalScale;
+			this.crackDecalMtl = crackDecalMtl;
+			this.maxFracture = maxFracture;
+			this.fullFractureFx = fullFractureFx;
+			this.fractureFx = fractureFx;
+			this.noProceduralFullFracture = noProceduralFullFracture;
+			this.brokenMtl = brokenMtl;
+			this.destroyTimeout = destroyTimeout;
+			this.destroyTimeoutSpread = destroyTimeoutSpread;
+		}
 	}
 }

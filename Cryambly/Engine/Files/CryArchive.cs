@@ -149,8 +149,7 @@ namespace CryCil.Engine.Files
 			{
 				if (File.Exists(path))
 				{
-					throw new FileAccessException(
-						$"Unable to open the archive file.{(Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path) ? "The archives located inside the game content folder can only be opened in read-only mode." : string.Empty)}");
+					throw new FileAccessException($"Unable to open the archive file.{(Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path) ? "The archives located inside the game content folder can only be opened in read-only mode." : string.Empty)}");
 				}
 				throw new FileNotFoundException("Unable to find the archive file.");
 			}

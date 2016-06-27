@@ -5,7 +5,7 @@ namespace CryCil.Engine.Rendering
 {
 	/// <summary>
 	/// Represents a table that can be filled with surface types by
-	/// <see cref="Material.FillSurfaceTypesTable"/>.
+	/// <see cref="Material.FillSurfaceTypeIds"/>.
 	/// </summary>
 	public unsafe struct SurfaceTypeTable
 	{

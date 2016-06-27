@@ -179,7 +179,9 @@ namespace CryCil.Engine.Input.ActionMapping
 		// Special class that caches the object that handles the static class.
 		private static class StaticActionMapDelegate<[UsedImplicitly] ActionMapType>
 		{
+#pragma warning disable 649
 			[UsedImplicitly] public static ActionMapHandler Handler;
+#pragma warning restore 649
 		}
 	}
 }

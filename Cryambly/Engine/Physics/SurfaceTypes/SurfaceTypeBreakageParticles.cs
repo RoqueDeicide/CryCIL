@@ -9,11 +9,13 @@ namespace CryCil.Engine.Physics
 	/// </summary>
 	public struct SurfaceTypeBreakageParticles
 	{
+#pragma warning disable 649
 		[UsedImplicitly] private IntPtr type;
 		[UsedImplicitly] private IntPtr particleEffect;
 		[UsedImplicitly] private int countPerUnit;
 		[UsedImplicitly] private float countScale;
 		[UsedImplicitly] private float scale;
+#pragma warning restore 649
 		/// <summary>
 		/// Gets the name of the breakage event during which this particle effect will spawn.
 		/// </summary>

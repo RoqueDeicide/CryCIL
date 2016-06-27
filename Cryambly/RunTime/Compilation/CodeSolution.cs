@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -126,6 +127,7 @@ namespace CryCil.RunTime.Compilation
 			{
 				solutionFileText = sr.ReadToEnd();
 			}
+
 			// Cut off unneeded start and end of the file.
 			int firstProjectWordIndex =
 				solutionFileText.IndexOf(ProjectTag, StringComparison.InvariantCulture);
@@ -133,14 +135,18 @@ namespace CryCil.RunTime.Compilation
 				solutionFileText.IndexOf(GlobalTag, StringComparison.InvariantCulture);
 			solutionFileText = solutionFileText.Substring(firstProjectWordIndex,
 														  firstGlobalWordIndex - firstProjectWordIndex + 2);
+
 			// Find starts and ends of each Project section.
 			List<int> projectSectionStartIndices = solutionFileText.AllIndexesOf(ProjectTag);
 			List<int> projectSectionEndIndices = solutionFileText.AllIndexesOf(EndProjectTag);
+			Debug.Assert(projectSectionStartIndices != null, "projectSectionStartIndices != null");
+			Debug.Assert(projectSectionEndIndices != null, "projectSectionEndIndices != null");
 			if (projectSectionStartIndices.Count != projectSectionEndIndices.Count)
 			{
 				throw new Exception("Solution file is not properly written: Number of project section" +
 									" start points is not the same as number of end points.");
 			}
+
 			// Load up projects.
 			for (int i = 0; i < projectSectionStartIndices.Count; i++)
 			{

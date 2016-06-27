@@ -60,6 +60,43 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		internal Vector2 Capsule;
 		internal int ProjectionType;
 		//internal DynArray<CCryName> arrProxyNames;  //test capsules/sphere joint against these colliders
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
+		/// </summary>
+		internal RowSimulationParametersInternals(RowAttachmentSimulationType clampMode, bool useDebugSetup,
+												  bool useDebugText, bool useSimulation, byte simFps,
+												  float coneAngle, Vector3 coneRotation, float mass,
+												  float gravity, float damping, float jointSpring,
+												  float rodLength, Vector2 stiffnessTarget,
+												  Vector2 turbulence, float maxVelocity, bool cycle,
+												  float stretch, uint relaxationLoops,
+												  Vector3 translationAxis, IntPtr strDirTransJoint,
+												  Vector2 capsule, int projectionType)
+		{
+			this.ClampMode = clampMode;
+			this.UseDebugSetup = useDebugSetup;
+			this.UseDebugText = useDebugText;
+			this.UseSimulation = useSimulation;
+			this.SimFps = simFps;
+			this.ConeAngle = coneAngle;
+			this.ConeRotation = coneRotation;
+			this.Mass = mass;
+			this.Gravity = gravity;
+			this.Damping = damping;
+			this.JointSpring = jointSpring;
+			this.RodLength = rodLength;
+			this.StiffnessTarget = stiffnessTarget;
+			this.Turbulence = turbulence;
+			this.MaxVelocity = maxVelocity;
+			this.Cycle = cycle;
+			this.Stretch = stretch;
+			this.RelaxationLoops = relaxationLoops;
+			this.TranslationAxis = translationAxis;
+			this.StrDirTransJoint = strDirTransJoint;
+			this.Capsule = capsule;
+			this.ProjectionType = projectionType;
+		}
 	}
 	/// <summary>
 	/// Represents a set of parameters that specify the simulation of rows of linked joints.

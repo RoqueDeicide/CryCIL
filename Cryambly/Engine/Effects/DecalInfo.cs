@@ -38,10 +38,6 @@ namespace CryCil.Engine
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Probably not necessary when creating a decal on the character using
-		/// <see cref="Character.CreateDecal"/>.
-		/// </para>
-		/// <para>
 		/// If not specified when passed to <see cref="Decal.Create"/> then the decal will be cast into
 		/// environment.
 		/// </para>
