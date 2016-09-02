@@ -221,6 +221,7 @@
     <ClInclude Include="Allocation.hpp" />
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="Collection.hpp" />
+    <ClInclude Include="CryCilModule.h" />
     <ClInclude Include="List.hpp" />
     <ClInclude Include="CryCilHeader.h" />
     <ClInclude Include="ArrayHeader.h" />
@@ -452,6 +453,7 @@
     <ClInclude Include="Interops\WaterManagerStructs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CryCilModule.cpp" />
     <ClCompile Include="CryEngineInterface.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

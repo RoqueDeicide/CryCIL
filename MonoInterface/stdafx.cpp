@@ -3,11 +3,6 @@
 // stdafx.obj will contain the pre-compiled type information
 
 #include "stdafx.h"
-#include <CryCore/Platform/platform_impl.inl>			// One time this file is included.
 
 // TODO: reference any additional headers you need in STDAFX.H
 // and not in this file
-
-IMonoInterface *MonoEnv = nullptr;
-//! Provides access to IGameFramework implementation.
-IGameFramework *Framework = nullptr;

@@ -26,7 +26,7 @@ void TestFramework()
 
 //! Initializes Mono run-time environment.
 MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners,
-							 MonoLog::Level logLevel, SSystemInitParams &startupParams)
+							 MonoLog::Level logLevel, const SSystemInitParams &startupParams)
 	: broadcaster(nullptr)
 	, appDomain(nullptr)
 {

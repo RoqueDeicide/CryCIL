@@ -677,6 +677,7 @@
     <ClInclude Include="List.Object.hpp">
       <Filter>Extras</Filter>
     </ClInclude>
+    <ClInclude Include="CryCilModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1202,6 +1203,7 @@
     <ClCompile Include="RunTime\MonoInterface.Initialization.cpp">
       <Filter>RunTime</Filter>
     </ClCompile>
+    <ClCompile Include="CryCilModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

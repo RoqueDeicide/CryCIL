@@ -19,12 +19,6 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 																List<IMonoSystemListener *> *listeners,
 																SSystemInitParams &startupParams)
 	{
-		// Initializes gEnv variable, registers some objects.
-		// Fun fact: Module name is only used for Unit Tests.
-		ModuleInitISystem(framework->GetISystem(), "CryCIL");
-
-		// Use static allocation. Allows to not have to call a destructor.
-		static char buff[sizeof(MonoInterface)];
-		return new (buff)MonoInterface(framework, listeners, startupParams);
+		fdsfsdfsdf
 	}
 }

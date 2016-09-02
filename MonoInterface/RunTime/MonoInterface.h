@@ -55,7 +55,7 @@ public:
 	//!
 	//! @param framework Pointer to IGameFramework object that cannot be obtained in any other way.
 	MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners,
-				  MonoLog::Level logLevel, SSystemInitParams &startupParams);
+				  MonoLog::Level logLevel, const SSystemInitParams &startupParams);
 	#pragma endregion
 	#pragma region External Triggers
 	//! Triggers registration of FlowGraph nodes.
