@@ -17,7 +17,7 @@
     <OutputPath>..\Build\Output\bin\win_x86\Modules\CryCIL\</OutputPath>
     <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL,WIN32</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>..\Solutions\CryCIL.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
