@@ -151,7 +151,7 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <PostBuildEvent>
-      <Command>Xcopy "$(SolutionDir)..\Build\Output\*" "$(SolutionDir)..\..\..\*" /d /y /i /s</Command>
+      <Command>$(SolutionDir)CopyBuildOutput.exe $(TargetDir) $(SolutionDir)..\Build\ $(SolutionDir)..\..\..\</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy output from Build directory to actual binary folder.</Message>
