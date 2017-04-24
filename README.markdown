@@ -25,6 +25,10 @@ I have exposed some parts of CryEngine triangular mesh editing interface for sta
 The next milestone would be to remove some of the old, too complicated features, that made the development process slow, and debugging very hard. Achieving that goal proved to be a little too much for me, as my inexperience with C++ and lack of understanding of CryMono's internal mechanisms (mostly thanks to poor docs) caused me to botch CryMono completely, leaving no choice other then restarting the project from scratch.
 ## CryCIL
 After restarting the project and naming it CryCIL I've set out to create "v1" version of it which would be the minimal implementation needed for working with Mono. v1 mostly focuses on just establishing virtual interface with Mono with minimal interaction with CryEngine, which means, that it has a potential to be compatible with almost any other version of CE.
+
+## The End
+I (RoqueDeicide) had decided to cease development on CryCIL, since, due to my less then stellar health, I cannot keep up with CryENGINE development, while wrestling with imperfections of my code. From this point on I will, most likely develop my own engine.
+
 # Installation
 Download the release of CryCIL that you want to use (e.g. the latest one). Then download release of CryCIL Base Binaries that is mentioned in the notes for your CryCIL release. Unpack both archives into CryEngine installation directory.
 # Documentation & Info
